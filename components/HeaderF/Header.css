@@ -1,0 +1,149 @@
+/* Estilos generales para el header */
+header {
+  background-color: #0288D1; /* Azul profundo */
+  color: white;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between; /* Espacio entre los contenedores */
+  align-items: center; /* Alinear verticalmente los elementos */
+  border-bottom: 3px solid #0277BD; /* Línea sutil para separar */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+/* Contenedor para la imagen y el título (alineado a la izquierda) */
+.left-container {
+  display: flex;
+  align-items: center; /* Centrar la imagen y el título verticalmente */
+}
+
+.left-container img.logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 20px; /* Espacio entre la imagen y el título */
+  border: 2px solid white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Sombra suave */
+}
+
+.left-container h1 {
+  margin: 0;
+  font-size: 2rem; /* Aumentar el tamaño del título */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Tipografía moderna */
+  font-weight: 600;
+  text-transform: capitalize; /* Título más estilizado */
+  color: white;
+}
+
+/* Contenedor para los botones (alineados a la derecha) */
+.right-container {
+  display: flex;
+  align-items: center; /* Alinear los elementos verticalmente */
+  gap: 15px; /* Espacio entre los botones */
+}
+
+/* Estilo para los botones de login y registro */
+.btn-login {
+  text-decoration: none;
+  background-color: #fff;
+  color: #0288D1;
+  padding: 12px 25px;
+  border-radius: 25px; /* Borde redondeado para un estilo más moderno */
+  border: 2px solid #0288D1;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase; /* Transformar texto a mayúsculas */
+  letter-spacing: 1px; /* Espaciado entre letras */
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-login:hover {
+  background-color: #0288D1;
+  color: white;
+  transform: translateY(-2px); /* Efecto de movimiento al pasar el cursor */
+}
+
+.btn-login:focus {
+  outline: none;
+  box-shadow: 0 0 5px 3px rgba(2, 136, 209, 0.6); /* Sombra de enfoque */
+}
+
+.btn-login:active {
+  transform: translateY(1px); /* Efecto de presionar el botón */
+}
+
+/* Estilo para el botón de cerrar sesión */
+.btn-logout {
+  background-color: #DC3545; /* Rojo para el botón de salir */
+  color: white;
+  padding: 12px 25px;
+  border-radius: 25px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-logout:hover {
+  background-color: #c82333;
+  transform: translateY(-2px); /* Efecto de movimiento */
+}
+
+.btn-logout:focus {
+  outline: none;
+  box-shadow: 0 0 5px 3px rgba(220, 53, 69, 0.6); /* Sombra de enfoque */
+}
+
+.btn-logout:active {
+  transform: translateY(1px); /* Efecto de presionar el botón */
+}
+
+/* Estilo para el mensaje de bienvenida */
+.user-info {
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Espacio entre el texto y la imagen */
+}
+
+.user-info span {
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-transform: capitalize; /* Aseguramos que el nombre sea en formato capitalizado */
+}
+
+.user-profile-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Sombra suave */
+  cursor: pointer; /* Hace que la imagen se vea interactiva */
+}
+
+/* Estilo adicional para el dropdown */
+.dropdown-toggle::after {
+  display: none; /* Eliminar el ícono de flecha del dropdown */
+}
+
+.dropdown-menu {
+  background-color: #0288D1; /* Mismo color de fondo que el header */
+  border-radius: 5px;
+  border: none;
+}
+
+.dropdown-item {
+  color: white;
+  font-weight: 500;
+  padding: 10px 20px;
+  transition: all 0.3s ease-in-out;
+}
+
+.dropdown-item:hover {
+  background-color: #0277BD; /* Efecto hover para los items del dropdown */
+  color: #ffffff;
+}

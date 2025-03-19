@@ -1,0 +1,39 @@
+.card-img-top {
+  height: 200px; /* Mantener la altura si es necesario */
+  object-fit: contain; /* Mantiene la relación de aspecto sin recortar */
+}
+/* Estilo para el cuerpo de la tarjeta */
+.card-body {
+  padding: 15px; /* Padding para el contenido */
+}
+
+/* Estilo del título (nombre del producto) */
+.card-title {
+  font-size:0.7rem; /* Tamaño del título */
+  font-weight: bold; /* Texto en negrita */
+  margin-bottom: 10px; /* Espacio debajo del título */
+}
+
+/* Estilo para el texto del precio */
+.card-text {
+  font-size: 1rem; /* Tamaño de fuente estándar */
+  color: #000000; /* Color de texto gris oscuro */
+}
+
+/* Estilo para el botón */
+.btn-primary {
+  background-color: #007bff; /* Color de fondo azul */
+  border: none;
+  padding: 10px 20px; /* Padding para el botón */
+  border-radius: 5px; /* Bordes redondeados */
+  font-weight: bold; /* Negrita en el texto */
+  text-transform: uppercase; /* Texto en mayúsculas */
+  letter-spacing: 1px; /* Espaciado entre letras */
+  transition: background-color 0.3s ease; /* Transición suave para el hover */
+}
+
+/* Efecto hover para el botón */
+.btn-primary:hover {
+  background-color: #0056b3; /* Color de fondo azul más oscuro al pasar el ratón */
+}
+

@@ -1,0 +1,39 @@
+.card {
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Agrega sombra suave */
+    transition: transform 0.3s ease-in-out; /* Agrega una transición para el hover */
+  }
+  
+  .card:hover {
+    transform: scale(1.05); /* Escala ligeramente la tarjeta al pasar el ratón */
+  }
+  
+  .card-header {
+    font-size: 2.5rem; /* Tamaño del texto en el encabezado */
+    font-weight: bold;
+    padding: 15px; /* Padding para el encabezado */
+  }
+  
+  .card-body {
+    padding: 20px; /* Padding adicional para el cuerpo de la tarjeta */
+  }
+  
+  .card-title {
+    font-size: 2.5rem; /* Tamaño del texto del título */
+    font-weight: bold;
+  }
+  
+  .card-text {
+    font-size: 1.2rem; /* Tamaño del texto del cuerpo */
+    color: #444; /* Color de texto */
+  }
+  
+  .text-bg-secondary {
+    background-color: #6c757d; /* Fondo de la tarjeta */
+    color: white; /* Color del texto para el fondo oscuro */
+  }
+  
+  .text-bg-secondary:hover {
+    background-color: #5a6268; /* Color de fondo cuando pasa el ratón */
+  }
+  

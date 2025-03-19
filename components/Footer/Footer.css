@@ -1,0 +1,99 @@
+/* Footer - Estilos principales */
+.footer {
+    background-color: #1f1f1f; /* Fondo oscuro */
+    color: #f5f5f5; /* Texto claro */
+    padding: 40px 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Sección superior */
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilo de cada sección */
+  .footer-section {
+    flex: 1;
+    margin: 10px;
+    min-width: 200px;
+  }
+  
+  .footer-section h3 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #33c3ff; /* Color de los encabezados */
+  }
+  
+  .footer-section ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .footer-section ul li {
+    margin: 8px 0;
+    font-size: 14px;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  
+  .footer-section ul li:hover {
+    color: #33c3ff; /* Color en hover */
+  }
+  
+  /* Estilo de la sección de contacto */
+  .footer-contact {
+    font-size: 14px;
+  }
+  
+  .footer-contact h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #33c3ff;
+  }
+  
+  .footer-contact p {
+    margin: 5px 0;
+  }
+  
+  .footer-contact p:hover {
+    color: #33c3ff; /* Color en hover */
+  }
+  
+  /* Sección de copyright */
+  .footer-copyright {
+    background-color: #141414;
+    padding: 20px;
+    text-align: center;
+    font-size: 14px;
+    color: #999;
+  }
+  
+  .footer-copyright p {
+    margin: 0;
+  }
+  
+  /* Diseño responsivo */
+  @media screen and (max-width: 768px) {
+    .footer-top {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .footer-section {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  }
+  .footer-link {
+    color: #ffffff;
+    text-decoration: none;
+  }
+  
+  .footer-link:hover {
+    text-decoration: underline;
+  }
+  
+  

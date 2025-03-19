@@ -1,0 +1,32 @@
+.peces-view-container {
+    padding: 20px;
+  }
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .peces-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Esto asegura que solo haya una columna por fila */
+    gap: 20px;
+  }
+  
+  .card {
+    border-radius: 10px;
+  }
+  
+  .card-body {
+    padding: 15px;
+  }
+  
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+  
+  .card-text {
+    font-size: 1rem;
+  }
+  
