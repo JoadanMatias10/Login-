@@ -5,15 +5,18 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 interface Producto {
   imagen?: string;
   nombre: string;
+  descripcion: string;
   precio: number;
+  id?:string;
 }
 
 // Definir las props del componente ProductoCard
 interface ProductoCardProps {
   producto: Producto;
+  onPress?: () => void; 
 }
 
-const ProductoCard: React.FC<ProductoCardProps> = ({ producto }) => {
+const ProductoCard: React.FC<ProductoCardProps> = ({ producto, onPress }) => {
   return (
     <View style={styles.card}>
       <Image

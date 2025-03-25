@@ -1,44 +1,40 @@
-// App.tsx
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { MenuProvider } from 'react-native-popup-menu'; // Importar MenuProvider
+
+// Cloudinary
+import { Cloudinary } from '@cloudinary/url-gen';
+import { auto } from '@cloudinary/url-gen/actions/resize';
+import { autoGravity } from '@cloudinary/url-gen/qualifiers/gravity';
 
 // Importación de Componentes
 import Header from './components/HeaderF/Header';
 import Footer from './components/Footer/Footer';
-import NavBar from './components/NavBar/Nav';
-
-// Importar navegación
-import AppNavigator from './navigation/AppNavigator';
 
 // Importar el AuthProvider
 import { AuthProvider } from './components/contexts/AuthContext';
-import MainContent from './MainContent';
+import MainContent from './MainContent'; // Importar el nuevo componente
 
 const App = () => {
+  // Configuración de Cloudinary
+  const cld = new Cloudinary({ cloud: { cloudName: 'dn3yputmz' } });
+
+  // Uso de una imagen de muestra de Cloudinary
+  const img = cld
+    .image('cld-sample-5')
+    .format('auto')
+    .quality('auto')
+    .resize(auto().gravity(autoGravity()).width(500).height(500));
+
   return (
-    <AuthProvider>
-      <View style={styles.container}>
-        {/* Header */}
-        <Header
-          titulo="FishCare"
-          imagen="https://res.cloudinary.com/dn3yputmz/image/upload/v1741654718/Pagina/ol74oiubojbytdyhijhc.png"
-        />
-        
-        {/* Navegación */}
-        <AppNavigator />
-        <MainContent/>
-        {/* Footer */}
-        <Footer />
-      </View>
-    </AuthProvider>
+    <MenuProvider> {/* Envuelve todo con MenuProvider */}
+      <AuthProvider>
+        <NavigationContainer>
+          <MainContent />
+        </NavigationContainer>
+      </AuthProvider>
+    </MenuProvider>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-});
 
 export default App;

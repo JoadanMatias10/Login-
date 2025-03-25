@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     gap: 30,
   },
   cardWrapper: {
-    width: "48%", // Dos columnas con un pequeño espacio entre ellas
+    width: "100%", // Dos columnas con un pequeño espacio entre ellas
     backgroundColor: "#fff",
     borderRadius: 15,
     shadowColor: "#000",

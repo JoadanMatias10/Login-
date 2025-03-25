@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import axios from 'axios';
-import CardPez from '../../components/CARD/CardPez'; // Asegúrate de que la ruta sea correcta
+import CardPez from '../../components/CARD/CardsClient/CardPez'; // Asegúrate de que la ruta sea correcta
 
 // Definir la interfaz para el tipo "Pez"
 interface Pez {
@@ -57,6 +57,7 @@ const PecesView = () => {
         keyExtractor={(item) => item._id}
         renderItem={({ item }) => <CardPez pez={item} />}
         contentContainerStyle={styles.pecesGrid}
+        showsVerticalScrollIndicator={true} // Mostrar la barra de desplazamiento vertical
       />
     </View>
   );
@@ -65,6 +66,7 @@ const PecesView = () => {
 const styles = StyleSheet.create({
   pecesViewContainer: {
     padding: 20,
+    flex: 1,
   },
   title: {
     textAlign: 'center',
@@ -74,6 +76,7 @@ const styles = StyleSheet.create({
   },
   pecesGrid: {
     gap: 20,
+    paddingBottom: 100, // Añade un poco de padding para evitar que los elementos se toquen con la barra de desplazamiento
   },
   card: {
     borderRadius: 10,

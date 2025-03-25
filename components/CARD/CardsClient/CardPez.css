@@ -1,0 +1,19 @@
+.card img {
+    width: 400px; /* Tamaño específico para la imagen */
+
+    object-fit: contain;
+  }
+  
+  .card-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+  
+  .card-text {
+    font-size: 1.8rem;
+  }
+  
+  .card-text small {
+    font-size: 1rem;
+  }
+  

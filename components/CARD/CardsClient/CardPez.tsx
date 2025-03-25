@@ -3,13 +3,12 @@ import { View, Text, Image, StyleSheet } from "react-native";
 
 // Definir la interfaz para el objeto pez
 interface Pez {
-  _id: string; // Agregar _id
   imagen: string;
   nombre: string;
-  temperatura?: string;
-  ph?: string;
+  temperatura: string;
+  ph: string;
   caracteristicas?: string;
-  comida?: string;
+  comida: string;
 }
 
 // Definir las props del componente CardPez
@@ -79,4 +78,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CardPez; 
+export default CardPez;

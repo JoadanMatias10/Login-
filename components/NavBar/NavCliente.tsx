@@ -22,7 +22,7 @@ type RootStackParamList = {
 // Definir el tipo de las props de navegación
 type NavBarNavigationProp = StackNavigationProp<RootStackParamList>;
 
-const NavBar = () => {
+const NavBarClient = () => {
   const navigation = useNavigation<NavBarNavigationProp>();
   const { isLoggedIn } = useAuth();
 
@@ -37,11 +37,8 @@ const NavBar = () => {
           <Text style={styles.menuTrigger}>☰</Text>
         </MenuTrigger>
         <MenuOptions>
-          <MenuOption onSelect={() => navigation.navigate("AllProducts")}>
-            <Text style={styles.menuItem}>Todos los productos</Text>
-          </MenuOption>
           <MenuOption onSelect={() => navigation.navigate("TodosLosProductos")}>
-            <Text style={styles.menuItem}>Categorías</Text>
+            <Text style={styles.menuItem}>Todos los productos</Text>
           </MenuOption>
           <MenuOption onSelect={() => navigation.navigate("PecesView")}>
             <Text style={styles.menuItem}>Peces</Text>
@@ -52,17 +49,12 @@ const NavBar = () => {
           <MenuOption onSelect={() => navigation.navigate("Soporte")}>
             <Text style={styles.menuItem}>Soporte</Text>
           </MenuOption>
-
-          {isLoggedIn && (
-            <>
               <MenuOption onSelect={() => navigation.navigate("Dispositivos")}>
                 <Text style={styles.menuItem}>Dispositivos</Text>
               </MenuOption>
               <MenuOption onSelect={() => navigation.navigate("Pecera")}>
                 <Text style={styles.menuItem}>Pecera</Text>
               </MenuOption>
-            </>
-          )}
         </MenuOptions>
       </Menu>
     </View>
@@ -112,4 +104,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NavBar;
+export default NavBarClient;

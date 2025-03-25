@@ -1,9 +1,9 @@
 import React from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Menu, MenuOptions, MenuOption, MenuTrigger } from "react-native-popup-menu";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { useAuth } from "../../components/contexts/AuthContext"; // Asegúrate de que la ruta sea correcta
 
 // Definir los tipos de las rutas
 type RootStackParamList = {
@@ -25,34 +25,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ titulo, imagen }) => {
   const navigation = useNavigation<HeaderNavigationProp>();
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-  const [userName, setUserName] = React.useState("");
-  const [userImage, setUserImage] = React.useState("");
-
-  // Verifica si el usuario está logueado
-  React.useEffect(() => {
-    const checkLoginStatus = async () => {
-      const token = await AsyncStorage.getItem("authToken");
-      const name = await AsyncStorage.getItem("userName");
-      const image = await AsyncStorage.getItem("userImage");
-      if (token) {
-        setIsLoggedIn(true);
-        setUserName(name || "");
-        setUserImage(image || "");
-      }
-    };
-    checkLoginStatus();
-  }, []);
-
-  const handleLogout = async () => {
-    setIsLoggedIn(false);
-    setUserName("");
-    setUserImage("");
-    await AsyncStorage.removeItem("authToken");
-    await AsyncStorage.removeItem("userName");
-    await AsyncStorage.removeItem("userImage");
-    navigation.navigate("Home");
-  };
+  const { isLoggedIn, userName, logout } = useAuth(); // Usar el contexto
 
   return (
     <View style={styles.header}>
@@ -85,7 +58,7 @@ const Header: React.FC<HeaderProps> = ({ titulo, imagen }) => {
             <Menu>
               <MenuTrigger>
                 <Image
-                  source={{ uri: userImage || "https://via.placeholder.com/150" }}
+                  source={{ uri: "https://res.cloudinary.com/dn3yputmz/image/upload/v1741714838/Pagina/sz4fwg74sqvywxjpsiqc.png" }}
                   style={styles.userProfileImage}
                 />
               </MenuTrigger>
@@ -96,7 +69,7 @@ const Header: React.FC<HeaderProps> = ({ titulo, imagen }) => {
                 <MenuOption onSelect={() => navigation.navigate("Configuracion")}>
                   <Text style={styles.dropdownItem}>Configuración</Text>
                 </MenuOption>
-                <MenuOption onSelect={handleLogout}>
+                <MenuOption onSelect={logout}>
                   <Text style={styles.dropdownItem}>Cerrar sesión</Text>
                 </MenuOption>
               </MenuOptions>
@@ -108,77 +81,77 @@ const Header: React.FC<HeaderProps> = ({ titulo, imagen }) => {
   );
 };
 
-// Estilos
+// Estilos (igual que antes)
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: "#0288D1", // Azul profundo
+    backgroundColor: "#0288D1",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingVertical: 15,
-    paddingHorizontal: 30,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
     borderBottomWidth: 3,
-    borderBottomColor: "#0277BD", // Línea sutil para separar
+    borderBottomColor: "#0277BD",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 6,
-    elevation: 5, // Sombra en Android
+    elevation: 5,
   },
   leftContainer: {
     flexDirection: "row",
     alignItems: "center",
   },
   logo: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    marginRight: 20,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginRight: 8,
     borderWidth: 2,
     borderColor: "#fff",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.15,
     shadowRadius: 8,
-    elevation: 5, // Sombra en Android
+    elevation: 5,
   },
   titulo: {
-    fontSize: 24,
-    fontFamily: "sans-serif", // Tipografía moderna
+    fontSize: 18,
+    fontFamily: "sans-serif",
     fontWeight: "600",
     color: "#fff",
-    textTransform: "capitalize", // Título más estilizado
+    textTransform: "capitalize",
   },
   rightContainer: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 15, // Espacio entre los botones
+    gap: 10,
   },
   btnLogin: {
     backgroundColor: "#fff",
-    paddingVertical: 12,
-    paddingHorizontal: 25,
-    borderRadius: 25,
-    borderWidth: 2,
+    paddingVertical: 8,
+    paddingHorizontal: 6,
+    borderRadius: 20,
+    borderWidth: 0,
     borderColor: "#0288D1",
   },
   btnLoginText: {
     color: "#0288D1",
-    fontSize: 16,
+    fontSize: 11,
     fontWeight: "600",
-    textTransform: "uppercase", // Transformar texto a mayúsculas
-    letterSpacing: 1, // Espaciado entre letras
+    textTransform: "uppercase",
+    letterSpacing: 1,
   },
   userInfo: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 10, // Espacio entre el texto y la imagen
+    gap: 5,
   },
   userName: {
     color: "#fff",
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "500",
-    textTransform: "capitalize", // Aseguramos que el nombre sea en formato capitalizado
+    textTransform: "capitalize",
   },
   userProfileImage: {
     width: 60,
@@ -190,10 +163,10 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.15,
     shadowRadius: 8,
-    elevation: 5, // Sombra en Android
+    elevation: 5,
   },
   dropdownMenu: {
-    backgroundColor: "#0288D1", // Mismo color de fondo que el header
+    backgroundColor: "#0288D1",
     borderRadius: 5,
     borderWidth: 0,
   },

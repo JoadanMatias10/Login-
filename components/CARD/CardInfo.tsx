@@ -1,3 +1,4 @@
+import { center } from "@cloudinary/url-gen/qualifiers/textAlignment";
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 

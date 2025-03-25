@@ -1,65 +1,86 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage"; // Reemplaza localStorage
+// components/contexts/AuthContext.tsx
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Definir la interfaz para el contexto de autenticación
+// Definir el tipo del contexto
 interface AuthContextType {
   isLoggedIn: boolean;
   userName: string;
-  login: (userName: string, token: string) => Promise<void>;
-  logout: () => Promise<void>;
+  role: string;
+  userId: string;
+  login: (userName: string, token: string, userRole: string, userId: string) => void;
+  logout: () => void;
 }
 
-// Crear el contexto con un valor por defecto
+// Crear el contexto
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Definir las props del AuthProvider
-interface AuthProviderProps {
-  children: ReactNode;
-}
-
-export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+// Proveedor del contexto
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userName, setUserName] = useState("");
+  const [userName, setUserName] = useState('');
+  const [role, setRole] = useState('publico');
+  const [userId, setUserId] = useState('');
 
-  // Verifica si el usuario está logueado al cargar el componente
+  // Cargar el estado inicial desde AsyncStorage
   useEffect(() => {
-    const checkLoginStatus = async () => {
-      const token = await AsyncStorage.getItem("authToken");
-      const name = await AsyncStorage.getItem("userName");
-      if (token) {
+    const loadAuthState = async () => {
+      const token = await AsyncStorage.getItem('authToken');
+      const storedUserName = await AsyncStorage.getItem('userName');
+      const storedRole = await AsyncStorage.getItem('role');
+      const storedUserId = await AsyncStorage.getItem('userId');
+
+      if (token && storedUserName && storedRole && storedUserId) {
         setIsLoggedIn(true);
-        setUserName(name || "");
+        setUserName(storedUserName);
+        setRole(storedRole);
+        setUserId(storedUserId);
       }
     };
-    checkLoginStatus();
+
+    loadAuthState();
   }, []);
 
-  const login = async (userName: string, token: string) => {
+  // Función para iniciar sesión
+  const login = async (userName: string, token: string, userRole: string, userId: string) => {
     setIsLoggedIn(true);
     setUserName(userName);
-    await AsyncStorage.setItem("authToken", token); // Guarda el token
-    await AsyncStorage.setItem("userName", userName); // Guarda el nombre de usuario
+    setRole(userRole);
+    setUserId(userId);
+
+    // Guardar en AsyncStorage
+    await AsyncStorage.setItem('authToken', token);
+    await AsyncStorage.setItem('userName', userName);
+    await AsyncStorage.setItem('role', userRole);
+    await AsyncStorage.setItem('userId', userId);
   };
 
+  // Función para cerrar sesión
   const logout = async () => {
     setIsLoggedIn(false);
-    setUserName("");
-    await AsyncStorage.removeItem("authToken"); // Elimina el token
-    await AsyncStorage.removeItem("userName"); // Elimina el nombre de usuario
+    setUserName('');
+    setRole('publico');
+    setUserId('');
+
+    // Eliminar de AsyncStorage
+    await AsyncStorage.removeItem('authToken');
+    await AsyncStorage.removeItem('userName');
+    await AsyncStorage.removeItem('role');
+    await AsyncStorage.removeItem('userId');
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, userName, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, userName, role, userId, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-// Hook personalizado para usar el contexto de autenticación
+// Hook personalizado para usar el contexto
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error("useAuth debe ser usado dentro de un AuthProvider");
+  if (!context) {
+    throw new Error('useAuth debe usarse dentro de un AuthProvider');
   }
   return context;
 };

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, FlatList, ActivityIndicator } from "react-native";
 import axios from "axios";
-import ProductoCard from "../../../components/CARD/ProductosCard"; // Asegúrate de que la ruta sea correcta
+import ProductoCard from "../../../components/CARD/CardsClient/ProductosCard"; // Asegúrate de que la ruta sea correcta
 import { RouteProp, useRoute } from "@react-navigation/native"; // Para obtener parámetros de la ruta
 
 // Definir la interfaz para el tipo "Producto"
@@ -43,6 +43,12 @@ const AllProducts = () => {
     }
   };
 
+  // Función para manejar el clic en "Ver detalles"
+  const handleVerDetalles = (producto: Producto) => {
+    console.log("Ver detalles de:", producto.nombre);
+    // Aquí puedes agregar la lógica para navegar a la pantalla de detalles
+  };
+
   useEffect(() => {
     if (categoria) {
       fetchProductos();
@@ -69,7 +75,10 @@ const AllProducts = () => {
         columnWrapperStyle={styles.productosGrid}
         renderItem={({ item }) => (
           <View style={styles.cardContainer}>
-            <ProductoCard producto={item} />
+            <ProductoCard
+              producto={item} // Pasa el objeto producto
+              onPress={() => handleVerDetalles(item)} // Pasa la función onPress
+            />
           </View>
         )}
       />

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator, Image } from "react-native";
 import axios from "axios";
-import ProductoCard from "../../../components/CARD/ProductosCard"; // Asegúrate de que la ruta sea correcta
+import ProductoCard from "../../../components/CARD/CardsClient/ProductosCard"; // Adjust the path as needed
 
 // Definir la interfaz para el tipo "Producto"
 interface Producto {
@@ -11,14 +12,12 @@ interface Producto {
   precio: number;
   stock: number;
   imagen: string;
-  // Agrega otras propiedades según la respuesta de tu API
 }
 
 const AllProducts = () => {
-  
-  const [productos, setProductos] = useState<Producto[]>([]); // Estado tipado
+  const [productos, setProductos] = useState<Producto[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null); // Estado tipado
+  const [error, setError] = useState<string | null>(null);
 
   const fetchProductos = async () => {
     try {
@@ -27,9 +26,9 @@ const AllProducts = () => {
       setLoading(false);
     } catch (err) {
       if (err instanceof Error) {
-        setError(err.message); // Guardar el mensaje de error
+        setError(err.message);
       } else {
-        setError("Ocurrió un error desconocido"); // Manejar otros tipos de errores
+        setError("Ocurrió un error desconocido");
       }
       setLoading(false);
     }
@@ -40,23 +39,84 @@ const AllProducts = () => {
   }, []);
 
   if (loading) {
-    return <div className="loading-message">Cargando productos...</div>;
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#0000ff" />
+        <Text>Cargando productos...</Text>
+      </View>
+    );
   }
 
   if (error) {
-    return <div className="error-message">Error: {error}</div>;
+    return (
+      <View style={styles.errorContainer}>
+        <Text style={styles.errorText}>Error: {error}</Text>
+      </View>
+    );
   }
 
+  const renderItem = ({ item }: { item: Producto }) => (
+    <TouchableOpacity
+      onPress={() => {
+        console.log("Ver detalles de:", item.nombre);
+      }}
+      style={styles.cardContainer}
+    >
+      <ProductoCard producto={item} />
+    </TouchableOpacity>
+  );
+
   return (
-    <div className="all-products-container">
-      <h1>Lista de Productos</h1>
-      <div className="productos-grid">
-        {productos.map((producto) => (
-          <ProductoCard key={producto._id} producto={producto} />
-        ))}
-      </div>
-    </div>
+    <View style={styles.container}>
+      <Text style={styles.title}>Lista de Productos</Text>
+      <FlatList
+        data={productos}
+        renderItem={renderItem}
+        keyExtractor={(item) => item._id}
+        numColumns={2} // For grid-like layout
+        columnWrapperStyle={styles.row} // For grid spacing
+        contentContainerStyle={styles.listContent}
+      />
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#fff',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 16,
+    textAlign: 'center',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 16,
+  },
+  listContent: {
+    paddingBottom: 16,
+  },
+  row: {
+    justifyContent: 'space-between',
+    marginBottom: 16,
+  },
+  cardContainer: {
+    width: '48%', // Approximately half width minus margin
+  },
+});
 
 export default AllProducts;

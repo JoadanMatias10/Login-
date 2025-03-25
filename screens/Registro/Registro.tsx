@@ -7,15 +7,18 @@ import {
   StyleSheet,
   ScrollView,
   Alert,
-} from "react-native";
+} 
+
+from "react-native";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { Picker } from "@react-native-picker/picker";
 
 // Definir el tipo de las rutas
 type RootStackParamList = {
   Login: undefined;
-  Registro: undefined; // Asegúrate de que la pantalla de registro esté definida
+  Registro: undefined;
 };
 
 // Definir el tipo de las props de navegación
@@ -38,8 +41,9 @@ const RegistroForm = () => {
     },
   });
 
-  const [preguntas, setPreguntas] = useState<any[]>([]); // Añadí el tipo "any[]" para evitar errores de TypeScript
+  const [preguntas, setPreguntas] = useState<any[]>([]);
   const [step, setStep] = useState(1);
+  const [errorMessage, setErrorMessage] = useState(""); // Estado para el mensaje de error
   const navigation = useNavigation<RegistroScreenNavigationProp>();
 
   useEffect(() => {
@@ -144,7 +148,9 @@ const RegistroForm = () => {
     }
 
     if (!isValid) {
-      Alert.alert("Error", errorMessage);
+      setErrorMessage(errorMessage); // Actualizar el estado del mensaje de error
+    } else {
+      setErrorMessage(""); // Limpiar el mensaje de error si no hay errores
     }
     return isValid;
   };
@@ -174,6 +180,7 @@ const RegistroForm = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+       <View style={styles.formContainer}>
       <Text style={styles.title}>Registro</Text>
       <View style={styles.form}>
         {step === 1 && (
@@ -196,6 +203,44 @@ const RegistroForm = () => {
               value={formData.apellidoM}
               onChangeText={(text) => handleChange("apellidoM", text)}
             />
+
+            {/* Selector de Sexo */}
+            <View style={styles.sexoContainer}>
+              <Text style={styles.sexoLabel}>Sexo:</Text>
+              <TouchableOpacity
+                style={[
+                  styles.sexoOption,
+                  formData.sexo === "Masculino" && styles.sexoOptionSelected,
+                ]}
+                onPress={() => handleChange("sexo", "Masculino")}
+              >
+                <Text
+                  style={[
+                    styles.sexoOptionText,
+                    formData.sexo === "Masculino" && styles.sexoOptionTextSelected,
+                  ]}
+                >
+                  Masculino
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  styles.sexoOption,
+                  formData.sexo === "Femenino" && styles.sexoOptionSelected,
+                ]}
+                onPress={() => handleChange("sexo", "Femenino")}
+              >
+                <Text
+                  style={[
+                    styles.sexoOptionText,
+                    formData.sexo === "Femenino" && styles.sexoOptionTextSelected,
+                  ]}
+                >
+                  Femenino
+                </Text>
+              </TouchableOpacity>
+            </View>
+
             <TextInput
               style={styles.input}
               placeholder="Edad"
@@ -247,17 +292,46 @@ const RegistroForm = () => {
 
         {step === 3 && (
           <>
+            {/* Selector de Pregunta de Recuperación */}
+            <View style={styles.pickerContainer}>
+              <Picker
+                selectedValue={formData.pregunta_recuperacion.preg_id}
+                onValueChange={(itemValue: string) =>
+                  handlePreguntaChange("preg_id", itemValue)
+                }
+                style={styles.picker}
+              >
+                <Picker.Item label="Selecciona una pregunta" value="" />
+                {preguntas.map((pregunta) => (
+                  <Picker.Item
+                    key={pregunta.preg_id}
+                    label={pregunta.pregunta}
+                    value={pregunta.preg_id}
+                  />
+                ))}
+              </Picker>
+            </View>
+
+            {/* Campo de Respuesta */}
             <TextInput
               style={styles.input}
               placeholder="Respuesta"
               value={formData.pregunta_recuperacion.respuesta}
               onChangeText={(text) => handlePreguntaChange("respuesta", text)}
             />
+
+            {/* Mostrar mensaje de error */}
+            {errorMessage ? (
+              <Text style={styles.errorText}>{errorMessage}</Text>
+            ) : null}
+
+            {/* Botón de Registrar */}
             <TouchableOpacity style={styles.button} onPress={handleSubmit}>
               <Text style={styles.buttonText}>Registrar</Text>
             </TouchableOpacity>
           </>
         )}
+      </View>
       </View>
     </ScrollView>
   );
@@ -267,38 +341,94 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     justifyContent: "center",
+    alignItems: "center",
     padding: 20,
-    backgroundColor: "#ffffff",
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    textAlign: "center",
     marginBottom: 20,
-    color: "#333",
   },
   form: {
     width: "100%",
+    maxWidth: 400,
   },
   input: {
-    padding: 14,
-    marginVertical: 10,
-    borderWidth: 2,
+    height: 40,
     borderColor: "#ccc",
-    borderRadius: 8,
-    fontSize: 16,
+    borderWidth: 1,
+    borderRadius: 5,
+    marginBottom: 15,
+    paddingHorizontal: 10,
+  },
+  formContainer: {
+    backgroundColor: "#fff",
+    padding: 20,
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 5,
+    width: "100%",
+    maxWidth: 400,
   },
   button: {
-    backgroundColor: "#00bfff",
-    padding: 14,
-    borderRadius: 8,
+    backgroundColor: "#007bff",
+    padding: 10,
+    borderRadius: 5,
     alignItems: "center",
-    marginTop: 10,
   },
   buttonText: {
-    color: "#ffffff",
+    color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  sexoContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 15,
+  },
+  sexoLabel: {
+    fontSize: 16,
+    marginRight: 10,
+  },
+  sexoOption: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 5,
+    paddingVertical: 8,
+    paddingHorizontal: 15,
+    marginRight: 10,
+  },
+  sexoOptionSelected: {
+    borderColor: "#007bff",
+    backgroundColor: "#007bff",
+  },
+  sexoOptionText: {
+    fontSize: 16,
+    color: "#333",
+  },
+  sexoOptionTextSelected: {
+    color: "#fff",
+  },
+  pickerContainer: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 5,
+    marginBottom: 15,
+    overflow: "hidden",
+  },
+  picker: {
+    height: 70,
+    width: "100%",
+    backgroundColor: "#f9f9f9",
+  },
+  errorText: {
+    color: "#ff0000",
+    fontSize: 14,
+    marginBottom: 10,
+    textAlign: "center",
   },
 });
 

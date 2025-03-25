@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import axios from "axios";
-import ProductoCard from "../../../components/CARD/ProductosCard"; // Asegúrate de que la ruta sea correcta
+import ProductoCard from "../../../components/CARD/CardsClient/ProductosCard"; // Asegúrate de que la ruta sea correcta
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 
@@ -12,6 +12,7 @@ interface Producto {
   nombre: string;
   descripcion: string;
   precio: number;
+  imagen: string; // Agrega la propiedad "imagen" aquí
   // Agrega otras propiedades según la respuesta de tu API
 }
 
@@ -76,9 +77,12 @@ const TodosLosProductos = () => {
           <View key={categoria} style={styles.categoria}>
             <Text style={styles.categoriaTitle}>{categoria}</Text>
             <View style={styles.productosGrid}>
-              {productosPorCategoria[categoria].slice(0, 3).map((producto) => (
-                <ProductoCard key={producto._id} producto={producto} />
-              ))}
+            {productosPorCategoria[categoria].slice(0, 3).map((producto) => (
+              <ProductoCard
+                key={producto._id}
+                producto={producto}
+              />
+            ))}
             </View>
             <TouchableOpacity
               style={styles.verMasBtn}
